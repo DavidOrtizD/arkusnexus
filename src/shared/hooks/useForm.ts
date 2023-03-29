@@ -34,7 +34,7 @@ export const useForm = ( initialForm = {} as any, formValidations = {} as any) =
     const createValidators = () => {
         
         const formCheckedValues = {} as any;
-        console.log("works")
+        
         for (const formField of Object.keys( formValidations )) {
             const [ fn, errorMessage ] = formValidations[formField];
             if(typeof fn === "function"){

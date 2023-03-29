@@ -1,7 +1,13 @@
-import { useForm } from '../shared';
+import { useForm } from '../../shared';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { startLogin } from '../../store/thunks/authThunk';
+import { checkingCredentials } from '../../store/slices/authSlice';
+import { Spinner } from '../../shared/components/Spinner';
+import { RootState } from '../../store/store';
+import { useIsLoading } from '../../shared/hooks/useIsLoading';
+import { startLoading } from '../../store/slices/loadingSlice';
 
 const formData = {
   email: '',
@@ -15,16 +21,26 @@ const formValidations = {
 
 export const LoginPage = (): JSX.Element => {
 
+  const dispatch = useDispatch();
+
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const { email, password, emailValid, passwordValid, onInputChange } = useForm(formData, formValidations);
+  const { email, password, emailValid, passwordValid, isFormValid, onInputChange } = useForm(formData, formValidations);
   
   const onSubmitLogin = (event: React.FormEvent<HTMLFormElement>) => {
+    
     event.preventDefault();
+    
     setFormSubmitted(() => {
      return  true;
-    })
+    });
+    
+    if(isFormValid) {
+      dispatch( startLoading() );
+      dispatch( startLogin({email, password}) );
+    }
   }
+
 
   return (
     <>

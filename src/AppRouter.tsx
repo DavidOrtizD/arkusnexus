@@ -1,18 +1,19 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { LoginPage } from './login/LoginPage';
-import { UserAdminPage } from './userAdmin';
-import { AccountAdminPage } from './accountAdmin';
-import { RegisterPage } from './register/RegisterPage';
+import { useSelector } from 'react-redux';
+import { RootState } from './store/store';
+import { AuthRouter } from './auth/authRouter';
+import { AdminRouter } from './admin/AdminRouter';
 
 export const AppRouter = () => {
+  
+  const { status } = useSelector( (state: RootState) => state.auth );
+
   return (
     <Routes>
-      <Route path="login" element={ <LoginPage />} />
-      <Route path="register" element={ <RegisterPage />} />
-      <Route path="admin/user" element={ <UserAdminPage />} />
-      <Route path="admin/account" element={ <AccountAdminPage />} />
-
-      <Route path="/*" element={ <Navigate to="/login" />} />
+      {
+        status !== "authenticated" ?  <Route path="/*" element={ <AuthRouter />} /> 
+        : <Route path="/*" element={ <AdminRouter />} />
+      }
     </Routes>
   )
 }
