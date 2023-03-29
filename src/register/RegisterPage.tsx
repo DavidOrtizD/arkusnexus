@@ -74,7 +74,7 @@ export const RegisterPage  = (): JSX.Element => {
                 <label htmlFor="inputPassword2" className="form-label">Verify Password</label>
                 <input type="password" id="inputPassword2" className="form-control" value={passwordCheck} name="passwordCheck" onChange={onInputChange} />
                 {
-                  formSubmitted && passwordValid ? 
+                  formSubmitted && passwordCheckValid ? 
                   ( <div className="text-danger">
                       { passwordCheckValid }
                     </div> ) : null
