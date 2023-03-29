@@ -58,7 +58,7 @@ export const LoginPage = (): JSX.Element => {
               </div>
             </div>
             <div className="modal-footer">
-              <Link type="button" className="btn btn-secondary" to="/admin/user" >Register</Link>
+              <Link type="button" className="btn btn-secondary" to="/register" >Register</Link>
               <button type="submit" className="btn btn-primary" >Login</button>
             </div>
           </form>
