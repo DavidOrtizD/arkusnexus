@@ -26,7 +26,7 @@ export const startLogin = createAsyncThunk<any, LoginData>('auth/login', async (
   return data;
 });
 
-export const startLogout = createAsyncThunk('auth/logout', async (_, {getState, dispatch}) => {
+export const startLogout = createAsyncThunk<any, any>('auth/logout', async (_, {getState, dispatch}) => {
   console.log(getState());
   const data =  await new Promise((resolve, reject)=> {
     setTimeout(()=> {

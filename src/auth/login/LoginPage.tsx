@@ -46,7 +46,7 @@ export const LoginPage = (): JSX.Element => {
     <>
       <div className="modal-dialog">
         <div className="modal-content">
-          <form onSubmit={(e) => onSubmitLogin(e)}>
+          <form onSubmit={(e) => onSubmitLogin(e)} noValidate>
             <div className="modal-header">
               <h5 className="modal-title">Login</h5>
             </div>
