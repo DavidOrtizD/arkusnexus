@@ -2,7 +2,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { FaDoorOpen, FaDoorClosed } from 'react-icons/fa';
 import logo from '../../assets/img/arkus_logo.png';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../store/store';
+import { RootState, AppDispatch } from '../../store/store';
 import { startLogout } from '../../store/thunks/authThunk';
 import { startLoading } from '../../store/slices/loadingSlice';
 
@@ -10,7 +10,7 @@ export const Navbar = () => {
 
   const {status, role} = useSelector((state: RootState) => state.auth);
   
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const doLogout = (event: React.MouseEvent<HTMLButtonElement>) => {
     dispatch( startLoading() );

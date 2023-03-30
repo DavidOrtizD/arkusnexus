@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { startLogin } from '../../store/thunks/authThunk';
 import { checkingCredentials } from '../../store/slices/authSlice';
 import { Spinner } from '../../shared/components/Spinner';
-import { RootState } from '../../store/store';
+import { RootState, AppDispatch } from '../../store/store';
 import { useIsLoading } from '../../shared/hooks/useIsLoading';
 import { startLoading } from '../../store/slices/loadingSlice';
 
@@ -21,7 +21,7 @@ const formValidations = {
 
 export const LoginPage = (): JSX.Element => {
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const [formSubmitted, setFormSubmitted] = useState(false);
 

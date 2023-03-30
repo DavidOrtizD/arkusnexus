@@ -5,7 +5,7 @@ import { stopLoading } from '../slices/loadingSlice';
 
 
 
-export const startLogin = createAsyncThunk('auth/login', async (loginData: LoginData, {getState, dispatch}) => {
+export const startLogin = createAsyncThunk<any, LoginData>('auth/login', async (loginData: LoginData, {getState, dispatch}) => {
   const {email} = loginData;
   
   const data =  await new Promise((resolve, reject)=> {
