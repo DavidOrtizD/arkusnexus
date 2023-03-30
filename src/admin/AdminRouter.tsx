@@ -7,7 +7,7 @@ export const AdminRouter = () => {
     <Routes>
       <Route path="user" element={ <UserAdminPage />} />
       <Route path="account" element={ <AccountAdminPage />} />
-      <Route path="/*" element={ <Navigate to="user" /> } />
+      <Route path="/*" element={ <Navigate to="userInfo" /> } />
     </Routes>
   )
 }

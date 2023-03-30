@@ -8,8 +8,6 @@ import { stopLoading } from '../slices/loadingSlice';
 export const startLogin = createAsyncThunk('auth/login', async (loginData: LoginData, {getState, dispatch}) => {
   const {email} = loginData;
   
-  console.log("works");
-  
   const data =  await new Promise((resolve, reject)=> {
     setTimeout(()=> {
       const mock = {
@@ -17,6 +15,7 @@ export const startLogin = createAsyncThunk('auth/login', async (loginData: Login
         email,
         name: 'david ortiz',
         role: 'admin',
+        team: 'Training Team',
         token: '1234',
         errorMessage: null,
       };

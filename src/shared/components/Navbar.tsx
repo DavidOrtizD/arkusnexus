@@ -30,18 +30,27 @@ export const Navbar = () => {
           </button>
           
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            {
-              status === 'authenticated' && (role === 'admin' || role === 'super-admin' ) ? (
-                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              {
+                status === 'authenticated' ? (
                   <li className="nav-item">
-                    <NavLink className={ ({isActive}) => `nav-link ${isActive ? 'active' : ''}`} to="/user">Admin User</NavLink>
+                    <NavLink className={ ({isActive}) => `nav-link ${isActive ? 'active' : ''}`} to="/userInfo">User Info</NavLink>
                   </li>
-                  <li className="nav-item">
-                    <NavLink className={ ({isActive}) => `nav-link ${isActive ? 'active' : ''}`} to="/account">Admin Account</NavLink>
-                  </li>
-                </ul>
-              ) : null  
-            }
+                ) : null
+              }
+              {
+                role === 'admin' || role === 'super-admin'  ? (
+                  <>
+                    <li className="nav-item">
+                      <NavLink className={ ({isActive}) => `nav-link ${isActive ? 'active' : ''}`} to="/user">Admin User</NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <NavLink className={ ({isActive}) => `nav-link ${isActive ? 'active' : ''}`} to="/account">Admin Account</NavLink>
+                    </li>
+                  </>
+                ) : null  
+              }
+            </ul>
           </div>
         </div>
         {

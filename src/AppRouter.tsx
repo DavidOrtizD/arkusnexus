@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
 import { AuthRouter } from './auth/authRouter';
 import { AdminRouter } from './admin/AdminRouter';
+import { UserInfopage } from './userInfoPage/UserInfoPage';
 
 export const AppRouter = () => {
   
@@ -10,6 +11,7 @@ export const AppRouter = () => {
 
   return (
     <Routes>
+      <Route path="userInfo" element={<UserInfopage />} />
       {
         status !== "authenticated" ?  <Route path="/*" element={ <AuthRouter />} /> 
         : <Route path="/*" element={ <AdminRouter />} />

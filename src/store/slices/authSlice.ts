@@ -10,6 +10,7 @@ export const authSlice = createSlice({
         name: null,
         role:null,
         token: null,
+        team: null,
         errorMessage: null,
     },
     reducers: {
@@ -26,6 +27,7 @@ export const authSlice = createSlice({
         state.name = data.name;
         state.role = data.role;
         state.token = data.token;
+        state.team = data.team;
         state.errorMessage = null;
       });
       
@@ -37,6 +39,7 @@ export const authSlice = createSlice({
         state.name = null;
         state.role = null;
         state.token = null;
+        state.team = null;
         state.errorMessage = null;
       });
     }
