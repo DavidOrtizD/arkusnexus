@@ -26,9 +26,21 @@ export const authSlice = createSlice({
         state.email = data.email;
         state.name = data.name;
         state.role = data.role;
-        state.token = data.token;
+        state.token = data?.token;
         state.team = data.team;
         state.errorMessage = null;
+      });
+      
+      builder.addCase(startLogin.rejected, (state, {payload}) => {
+        const data = payload as any;
+        state.status = 'not-authenticated', // 'checking', 'not-authenticated', 'authenticated'
+        state.uid = null;
+        state.email = null;
+        state.name = null;
+        state.role = null;
+        state.token = null;
+        state.team = null;
+        state.errorMessage = data.message;
       });
       
       builder.addCase(startLogout.fulfilled, (state, {payload}) => {

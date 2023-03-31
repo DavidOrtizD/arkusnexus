@@ -3,10 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { startLogin } from '../../store/thunks/authThunk';
-import { checkingCredentials } from '../../store/slices/authSlice';
-import { Spinner } from '../../shared/components/Spinner';
-import { RootState, AppDispatch } from '../../store/store';
-import { useIsLoading } from '../../shared/hooks/useIsLoading';
+import { AppDispatch } from '../../store/store';
 import { startLoading } from '../../store/slices/loadingSlice';
 
 const formData = {
