@@ -1,6 +1,11 @@
+import { useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { startLoading, stopLoading } from '../../store/slices/loadingSlice';
 import { useForm } from '../../shared';
-import { useState } from 'react';
-
+import * as api from '../../common/apis.json';
+import { Alert } from '../../shared/components/alert/Alert';
+import { AlertType } from '../../shared/components/alert/alert.interface';
 
 const formData = {
   name:'',
@@ -18,16 +23,44 @@ const formValidations = {
 
 export const RegisterPage  = (): JSX.Element => {
 
+  const dispatch = useDispatch();
+
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [displayAlert, setDisplayAlert] = useState(false);
+  const [alertType, setAlertType] = useState(AlertType.success);
+  const [alertContent, setAlertContent] = useState("");
 
   const { email, password, passwordCheck, name,  emailValid, passwordValid, nameValid, passwordCheckValid, onInputChange } = useForm(formData, formValidations);
-  
 
-  const onSubmitLogin = (event: React.FormEvent<HTMLFormElement>) => {
+ 
+  useEffect(()=> {
+    setTimeout(()=> {
+      setDisplayAlert(false);
+    }, 3000);
+  }, [displayAlert]);
+
+  const onSubmitLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setFormSubmitted(() => {
-     return  true;
-    });
+
+    try {
+      setFormSubmitted(() => {
+        return  true;
+      });
+
+      dispatch( startLoading() );
+   
+      await axios.post(api.auth.register, {email, password, name})
+        dispatch( stopLoading() );
+        setDisplayAlert(true);
+        setAlertType(AlertType.success);
+        setAlertContent("User was registered correctly.");
+    } catch(e: any) {
+        dispatch( stopLoading() );
+        setDisplayAlert(true);
+        setAlertType(AlertType.error);
+        setAlertContent(e.response.data.message);
+    }
+       
     
   }
 
@@ -87,6 +120,10 @@ export const RegisterPage  = (): JSX.Element => {
           </form>
         </div>
       </div>
+      {
+        displayAlert ? <Alert type = {alertType} content={alertContent} /> : null
+      }
+      
     </>
   )
 }
