@@ -5,4 +5,7 @@ export interface UserData {
   name: string;
   role?: string;
   team?: string;
+  englishLevel?: string;
+  techSkills?: string;
+  cv?: string;
 }

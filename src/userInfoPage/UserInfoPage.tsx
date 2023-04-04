@@ -4,7 +4,7 @@ import { RootState } from '../store/store';
 import { useEffect } from 'react';
 
 export const UserInfopage = () => {
-  const {role, name, email, uid, team, status} = useSelector((state: RootState) => state.auth);
+  const {role, name, email, uid, team, status, cv, techSkills, englishLevel} = useSelector((state: RootState) => state.auth);
   
   const navigate = useNavigate();
   
@@ -46,6 +46,37 @@ export const UserInfopage = () => {
                   {team}
                 </p>
               </div>
+              {
+                cv ? (
+                  <div className="mb-3">
+                    <label className="form-label">Cv: </label>
+                    <p>
+                      {cv}
+                    </p>
+                  </div>
+                ) : null
+              }
+              
+              {
+                techSkills ? (
+                  <div className="mb-3">
+                    <label className="form-label">Tech Skills: </label>
+                    <p>
+                      {techSkills}
+                    </p>
+                  </div>
+                ) : null
+              }
+              {
+                englishLevel ? (
+                  <div className="mb-3">
+                    <label className="form-label">English Level: </label>
+                    <p>
+                      {englishLevel}
+                    </p>
+                  </div>
+                ) : null
+              }
             </div>
         </div>
       </div>

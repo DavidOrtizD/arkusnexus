@@ -9,8 +9,10 @@ export const authSlice = createSlice({
         email: null,
         name: null,
         role:null,
-        token: null,
-        team: null
+        team: null,
+        englishLevel: null,
+        techSkills: null,
+        cv: null
     },
     reducers: {
         checkingCredentials: (state) => {
@@ -25,8 +27,10 @@ export const authSlice = createSlice({
         state.email = data.email;
         state.name = data.name;
         state.role = data.role;
-        state.token = data?.token;
         state.team = data.team;
+        state.englishLevel = data?.englishLevel;
+        state.techSkills = data?.techSkills;
+        state.cv = data?.cv;
       });
       
       builder.addCase(startLogin.rejected, (state, {payload}) => {
@@ -36,8 +40,10 @@ export const authSlice = createSlice({
         state.email = null;
         state.name = null;
         state.role = null;
-        state.token = null;
         state.team = null;
+        state.englishLevel = null;
+        state.techSkills = null;
+        state.cv = null;
       });
       
       builder.addCase(startLogout.fulfilled, (state, {payload}) => {
@@ -47,8 +53,10 @@ export const authSlice = createSlice({
         state.email = null;
         state.name = null;
         state.role = null;
-        state.token = null;
         state.team = null;
+        state.englishLevel = null;
+        state.techSkills = null;
+        state.cv = null;
       });
     }
 });
