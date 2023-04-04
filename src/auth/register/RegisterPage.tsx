@@ -1,11 +1,11 @@
 import { useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { startLoading, stopLoading } from '../../store/slices/loadingSlice';
-import { useForm } from '../../shared';
+import { useAlert, useForm } from '../../shared';
 import * as api from '../../common/apis.json';
 import { Alert } from '../../shared/components/alert/Alert';
-import { AlertType } from '../../shared/components/alert/alert.interface';
+import { AlertType } from '../../shared/interfaces/alert.interface';
 
 const formData = {
   name:'',
@@ -26,18 +26,10 @@ export const RegisterPage  = (): JSX.Element => {
   const dispatch = useDispatch();
 
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [displayAlert, setDisplayAlert] = useState(false);
-  const [alertType, setAlertType] = useState(AlertType.success);
-  const [alertContent, setAlertContent] = useState("");
 
-  const { email, password, passwordCheck, name,  emailValid, passwordValid, nameValid, passwordCheckValid, onInputChange } = useForm(formData, formValidations);
+  const { displayAlert, alertType, alertContent, setDisplayAlert, setAlertType, setAlertContent } = useAlert(false, AlertType.success, "");
 
- 
-  useEffect(()=> {
-    setTimeout(()=> {
-      setDisplayAlert(false);
-    }, 3000);
-  }, [displayAlert]);
+  const { email, password, passwordCheck, name,  emailValid, passwordValid, nameValid, passwordCheckValid, onInputChange, onResetForm } = useForm(formData, formValidations);
 
   const onSubmitLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -54,14 +46,14 @@ export const RegisterPage  = (): JSX.Element => {
         setDisplayAlert(true);
         setAlertType(AlertType.success);
         setAlertContent("User was registered correctly.");
+        setFormSubmitted(false);
+        onResetForm();
     } catch(e: any) {
         dispatch( stopLoading() );
         setDisplayAlert(true);
         setAlertType(AlertType.error);
         setAlertContent(e.response.data.message);
     }
-       
-    
   }
 
   return (

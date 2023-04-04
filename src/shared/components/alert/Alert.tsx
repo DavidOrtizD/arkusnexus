@@ -1,4 +1,4 @@
-import { AlertType } from './alert.interface';
+import { AlertType } from '../../interfaces';
 import './alert.css';
 
 export const Alert = (props: {type: AlertType, content: string}) => {

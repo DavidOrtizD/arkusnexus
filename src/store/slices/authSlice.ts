@@ -10,8 +10,7 @@ export const authSlice = createSlice({
         name: null,
         role:null,
         token: null,
-        team: null,
-        errorMessage: null,
+        team: null
     },
     reducers: {
         checkingCredentials: (state) => {
@@ -28,7 +27,6 @@ export const authSlice = createSlice({
         state.role = data.role;
         state.token = data?.token;
         state.team = data.team;
-        state.errorMessage = null;
       });
       
       builder.addCase(startLogin.rejected, (state, {payload}) => {
@@ -40,7 +38,6 @@ export const authSlice = createSlice({
         state.role = null;
         state.token = null;
         state.team = null;
-        state.errorMessage = data.message;
       });
       
       builder.addCase(startLogout.fulfilled, (state, {payload}) => {
@@ -52,7 +49,6 @@ export const authSlice = createSlice({
         state.role = null;
         state.token = null;
         state.team = null;
-        state.errorMessage = null;
       });
     }
 });

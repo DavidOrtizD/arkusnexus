@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { startLogin } from '../../store/thunks/authThunk';
 import { AppDispatch } from '../../store/store';
 import { startLoading } from '../../store/slices/loadingSlice';
+import { Alert } from '../../shared/components/alert/Alert';
+import { useAlert } from '../../shared/hooks/useAlert';
+import { AlertType } from '../../shared/interfaces/alert.interface';
 
 const formData = {
   email: '',
@@ -23,6 +26,8 @@ export const LoginPage = (): JSX.Element => {
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const { email, password, emailValid, passwordValid, isFormValid, onInputChange } = useForm(formData, formValidations);
+
+  const { displayAlert, alertType, alertContent } = useAlert(false, AlertType.success, "");
   
   const onSubmitLogin = (event: React.FormEvent<HTMLFormElement>) => {
     
@@ -77,6 +82,9 @@ export const LoginPage = (): JSX.Element => {
           </form>
         </div>
       </div>
+      {
+        displayAlert ? <Alert type = {alertType} content={alertContent} /> : null
+      }
     </>
   )
 }

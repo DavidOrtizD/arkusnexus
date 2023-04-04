@@ -1,26 +1,25 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { LoginData } from '../../shared/interfaces/loginData';
 import axios from 'axios';
 import * as apis from '../../common/apis.json'
 import { stopLoading } from '../slices/loadingSlice';
-
-const config = {
-  headers: {
-    "Content-Type": "application/json",
-    'Access-Control-Allow-Origin': '*',
-  }
-}
+import { launchAlert } from '../slices/alertSlice';
+import { LoginResponse, LoginData, AlertType } from '../../shared';
 
 export const startLogin = createAsyncThunk<any, LoginData>('auth/login', async (loginData: LoginData, {getState, dispatch}) => {
   try {
-    const response = await axios.post(apis.auth.login, loginData, config);
-  
+    const response = await axios.post(apis.auth.login, loginData);
+    const data: LoginResponse = response.data; 
+    
+    //Set authtoken to all requests
+    axios.defaults.headers.common['Authorization'] = `Bearer ${data.access_token}`;
+
     dispatch(stopLoading());
     
-    return response.data;
-  } catch(e) {
-    console.log(e);
+    return data.usrData;
+  } catch(e: any) {
+    dispatch(launchAlert({type: AlertType.error, content: e.response.data.message, display: true }));
     dispatch(stopLoading());
+    throw new Error(e);
   }
   
 });
