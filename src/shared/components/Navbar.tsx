@@ -41,8 +41,19 @@ export const Navbar = () => {
               {
                 role === 'admin' || role === 'super-admin'  ? (
                   <>
-                    <li className="nav-item">
-                      <NavLink className={ ({isActive}) => `nav-link ${isActive ? 'active' : ''}`} to="/user">Admin User</NavLink>
+                    <li className="nav-item dropdown">
+                      {/* <NavLink className={ ({isActive}) => `nav-link dropdown-toggle ${isActive ? 'active' : ''}`} to="/user" id="navbarDropdown" aria-expanded="false">Admin User</NavLink> */}
+                      <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Users
+                      </a>
+                      <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                          <NavLink className="dropdown-item" to="/user/create">Create User</NavLink>
+                        </li>
+                        <li>
+                          <NavLink className="dropdown-item" to="/user/admin">Admin Users</NavLink>
+                        </li>
+                      </ul>
                     </li>
                     <li className="nav-item">
                       <NavLink className={ ({isActive}) => `nav-link ${isActive ? 'active' : ''}`} to="/account">Admin Account</NavLink>

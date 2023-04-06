@@ -1,15 +1,20 @@
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import axios from 'axios';
-import { startLoading, stopLoading } from '../../store/slices/loadingSlice';
-import { useAlert, useForm } from '../../shared';
-import * as api from '../../common/apis.json';
-import { Alert } from '../../shared/components/alert/Alert';
-import { AlertType } from '../../shared/interfaces/alert.interface';
+import { startLoading, stopLoading } from '../../../store/slices/loadingSlice';
+import { useAlert, useForm } from '../../../shared';
+import * as api from '../../../common/apis.json';
+import { Alert } from '../../../shared/components/alert/Alert';
+import { AlertType } from '../../../shared/interfaces/alert.interface';
 
 const formData = {
   name:'',
   email: '',
+  role: '',
+  team: '',
+  englishLevel: '',
+  cv: '',
+  techSkills: '',
   password: '',
   passwordCheck: ''
 }
@@ -18,10 +23,11 @@ const formValidations = {
   name: [ (value: string) => value.length > 0, 'Name is required.'],
   email: [ (value: string) => value.includes('@'), 'Email must contain @.'],
   password: [ (value: string) => value.length >= 8, 'Password is must be at least 8 charaters long.'],
+  role: [ (value: string) => value.length > 0, 'Please Select a Role.'],
   passwordCheck: [ ['verifyEmail', 'password'], 'Passwords must match.']
 }
 
-export const RegisterPage  = (): JSX.Element => {
+export const CreateUserPage  = (): JSX.Element => {
 
   const dispatch = useDispatch();
 
@@ -29,19 +35,33 @@ export const RegisterPage  = (): JSX.Element => {
 
   const { displayAlert, alertType, alertContent, setDisplayAlert, setAlertType, setAlertContent } = useAlert(false, AlertType.success, "");
 
-  const { email, password, passwordCheck, name,  emailValid, passwordValid, nameValid, passwordCheckValid, onInputChange, onResetForm, isFormValid } = useForm(formData, formValidations);
+  const { email, 
+          password, 
+          passwordCheck, 
+          name, 
+          role, 
+          team, 
+          englishLevel, 
+          cv, 
+          techSkills, 
+          emailValid, 
+          passwordValid, 
+          nameValid, 
+          passwordCheckValid, 
+          roleValid, 
+          onInputChange, 
+          onResetForm, 
+          isFormValid } = useForm(formData, formValidations);
 
   const onSubmitLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      setFormSubmitted(() => {
-        return  true;
-      });
+      setFormSubmitted(true);
 
       if(isFormValid) {
         dispatch( startLoading() );
-        await axios.post(api.auth.register, {email, password, name})
+        await axios.post(api.user.createUser, {email, password, name, role, team, englishLevel, cv, techSkills})
         dispatch( stopLoading() );
         setDisplayAlert(true);
         setAlertType(AlertType.success);
@@ -63,7 +83,7 @@ export const RegisterPage  = (): JSX.Element => {
         <div className="modal-content">
           <form onSubmit={(e) => onSubmitLogin(e)} noValidate>
             <div className="modal-header">
-              <h5 className="modal-title">Register</h5>
+              <h5 className="modal-title">Create New User</h5>
             </div>
             <div className="modal-body">
               <div className="mb-3">
@@ -85,6 +105,41 @@ export const RegisterPage  = (): JSX.Element => {
                       { emailValid }
                     </div> ) : null
                 }
+              </div>
+              <div className="mb-3">
+                <label htmlFor="inputRole" className="form-label">Role</label>
+                <select className="form-select" id="inputRole" aria-label="Default select example" name="role" onChange={onInputChange}  value={role}>
+                  <option defaultValue="">Select Role Type</option>
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </select>
+                {
+                  formSubmitted && roleValid ? 
+                  ( <div className="text-danger">
+                      { roleValid }
+                    </div> ) : null
+                }
+              </div>
+              <div className="mb-3">
+                <label htmlFor="inputTeam" className="form-label">Assigned Team</label>
+                <input type="text" id="inputTeam" className="form-control" value={team} name="team" onChange={onInputChange} />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="inputEnglishLevel" className="form-label">English Level</label>
+                <select className="form-select" id="inputEnglishLevel" aria-label="English level select" name="englishLevel" onChange={onInputChange}  value={englishLevel}>
+                  <option defaultValue="" >Select English Level</option>
+                  <option value="beginner">Beginner</option>
+                  <option value="intermediate">Intermediate</option>
+                  <option value="advanced">Advanced</option>
+                </select>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="inputCv" className="form-label">CV</label>
+                <input type="text" id="inputCv" className="form-control" value={cv} name="cv" onChange={onInputChange} />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="inputCv" className="form-label">English Level</label>
+                <textarea className="form-control" id="exampleFormControlTextarea1" name="techSkills" rows = {3} value = {techSkills} onChange={onInputChange}></textarea>
               </div>
               <div className="mb-3">
                 <label htmlFor="inputPassword" className="form-label">Password</label>
@@ -116,7 +171,6 @@ export const RegisterPage  = (): JSX.Element => {
       {
         displayAlert ? <Alert type = {alertType} content={alertContent} /> : null
       }
-      
     </>
   )
 }

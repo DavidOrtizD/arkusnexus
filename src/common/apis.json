@@ -4,6 +4,7 @@
     "register": "http://localhost:3000/auth/register"
   },
   "user": {
-    "getUser": "http://localhost:3000/users/user"
+    "getUser": "http://localhost:3000/users/user",
+    "createUser": "http://localhost:3000/users/create"
   }
 }
